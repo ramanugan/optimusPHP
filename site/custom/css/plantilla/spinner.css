@@ -1,0 +1,52 @@
+.titulo {
+    margin-top: -17px;
+    position: absolute;
+}
+
+.titulo h3 {
+    color: #1d222e;
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+}
+
+
+.empresa {
+    position: absolute;
+    margin-top: 35px;
+}
+
+.empresa h3 {
+    font-size: .8rem;
+}
+
+.content{
+    width:100%;
+    height:50vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+//background: rgb(189, 188, 188);
+    opacity: .5
+}
+
+.spinner{
+    width:100px;
+    height:100px;
+    border-radius:50%;
+    border:5px solid black;
+    background:transparent;
+    border-top-color:#efef;
+    border-bottom-color: #efef;
+    border-left-color: black;
+    animation:spin 1.5s linear infinite;
+    position:relative;
+}
+
+@keyframes spin{
+    0%{
+        background:transparent;
+        transform: rotate(720deg);
+    }
+
+}

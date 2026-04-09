@@ -1,0 +1,19 @@
+GV310LAU (A GSM/GPRS/LTE Cat4/WCDMA/GNSS Locator Designed By Queclink)
+
+Firmware Over-The-Air package used to upgrade the firmware of GV310LAU over the air.
+
+Support firmware version: GV310LAUR02A06V11M1024
+=================================================
+ 
+ 1.    - The update package which is used to upgrade firmware of GV310LAU over the air.
+       - List of update packages:
+       *GV310LAU_R02_013A_060B.bin: update package from firmware version GV310LAUR02A01V58M1024_WBD to GV310LAUR02A06V11M1024.
+       *GV310LAU_R02_021E_060B.bin: update package from firmware version GV310LAUR02A02V30M1024_WBD to GV310LAUR02A06V11M1024.
+       *GV310LAU_R02_0314_060B.bin: update package from firmware version GV310LAUR02A03V20M1024_WBD to GV310LAUR02A06V11M1024.
+       *GV310LAU_R02_040A_060B.bin: update package from firmware version GV310LAUR02A04V10M1024_WBD to GV310LAUR02A06V11M1024.
+       *GV310LAU_R02_0511_060B.bin: update package from firmware version GV310LAUR02A05V17M1024 to GV310LAUR02A06V11M1024.
+       *GV310LAU_R02_060A_060B.bin: update package from firmware version GV310LAUR02A06V10M1024 to GV310LAUR02A06V11M1024.
+	
+=================================================		
+http://www.queclink.com 
+sales@queclink.com

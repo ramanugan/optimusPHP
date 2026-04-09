@@ -1,0 +1,34 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "chrome",
+            "name": "Listen for JS",
+            "request": "launch",
+            "url": "http://localhost/"
+        },
+        {
+            "name": "Listen for PHP",
+            "type": "php",
+            "request": "launch",
+            //"hostname": "host.docker.internal",
+            "port": 9003,
+            "log": true,
+            "externalConsole": false,
+            "pathMappings": {
+                "/var/www/html": "${workspaceRoot}"
+            },
+        },
+        {
+            "name": "Launch currently open script",
+            "type": "php",
+            "request": "launch",
+            "program": "${file}",
+            "cwd": "${fileDirname}",
+            "port": 9003
+        },
+    ]
+}

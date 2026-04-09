@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" enable-background="new 0 0 512 512" version="1.1" xml:space="preserve">
+ <g class="layer">
+  <title>Layer 1</title>
+  <g id="svg_1">
+   <path d="m0,26l0,464l512,0l0,-464l-512,0zm480,428.31l-448,0l0,-392.62l448,0l0,392.62zm-128,-303.38c0,29.57 21.49,53.54 48,53.54s48,-23.97 48,-53.54s-21.49,-53.54 -48,-53.54s-48,23.97 -48,53.54zm96,267.69l-384,0l96,-285.54l128,178.46l64,-53.54l96,160.62z" fill="#bfbfbf" id="svg_2"/>
+  </g>
+  <rect fill="#ffffff" height="0" id="svg_3" stroke="#000000" width="0" x="79.5" y="98"/>
+  <rect fill="#ffffff" height="422" id="svg_4" stroke="#000000" transform="matrix(1 0 0 1 0 0)" width="460" x="22.5" y="46"/>
+  <rect fill="#bfbfbf" height="8" id="svg_25" stroke="#000000" transform="matrix(1 0 0 1 0 0)" width="379" x="74.5" y="420"/>
+  <rect fill="#bfbfbf" height="8" id="svg_26" stroke="#000000" transform="matrix(1 0 0 1 0 0)" width="379" x="74.5" y="384"/>
+  <rect fill="#bfbfbf" height="8" id="svg_27" stroke="#000000" transform="matrix(1 0 0 1 0 0)" width="380" x="71.5" y="343"/>
+  <rect fill="#bfbfbf" height="8" id="svg_28" stroke="#000000" width="376" x="67.5" y="180"/>
+  <rect fill="#bfbfbf" height="8" id="svg_29" stroke="#000000" transform="matrix(1 0 0 1 0 0)" width="376" x="69.5" y="218"/>
+  <rect fill="#bfbfbf" height="8" id="svg_30" stroke="#000000" transform="matrix(1 0 0 1 0 0)" width="376" x="69.5" y="257"/>
+  <rect fill="#bfbfbf" height="8" id="svg_31" stroke="#000000" transform="matrix(1 0 0 1 0 0)" width="376" x="71.5" y="300"/>
+  <rect fill="#bfbfbf" height="85" id="svg_32" stroke="#000000" transform="matrix(1 0 0 1 0 0)" width="115" x="54.5" y="74"/>
+  <rect fill="#bfbfbf" height="9" id="svg_34" stroke="#000000" width="196" x="228.5" y="75"/>
+  <rect fill="#bfbfbf" height="9" id="svg_35" stroke="#000000" transform="matrix(1 0 0 1 0 0)" width="196" x="243.5" y="108"/>
+  <rect fill="#bfbfbf" height="9" id="svg_36" stroke="#000000" transform="matrix(1 0 0 1 0 0)" width="196" x="256.5" y="143"/>
+ </g>
+
+</svg>

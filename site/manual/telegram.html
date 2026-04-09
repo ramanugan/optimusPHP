@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cómo vincular tus alertas GPS con Telegram — Optimus GPS</title>
+  <style>
+    :root {
+      --blue: #1a73e8;
+      --blue-dk: #1558b0;
+      --tg: #229ED9;
+      --tg-dk: #1a7fb5;
+      --green: #1db954;
+      --red: #e53935;
+      --yellow: #f9a825;
+      --bg: #f4f6fb;
+      --card: #ffffff;
+      --text: #1e2a3a;
+      --muted: #6b7a90;
+      --border: #dde3ef;
+      --radius: 14px;
+      --shadow: 0 4px 24px rgba(26, 115, 232, .10);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, #0d1b2a 0%, #1a3a5c 60%, #229ED9 100%);
+      color: #fff;
+      padding: 64px 24px 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .hero-icon {
+      width: 72px;
+      height: 72px;
+      background: var(--tg);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      box-shadow: 0 8px 32px rgba(34, 158, 217, .4);
+    }
+
+    .hero-icon svg {
+      width: 40px;
+      height: 40px;
+      fill: #fff;
+    }
+
+    .hero h1 {
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      font-size: 1.05rem;
+      opacity: .85;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    /* ── LAYOUT ── */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 20px 80px;
+    }
+
+    /* ── SECTION TITLE ── */
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 48px 0 20px;
+      color: var(--text);
+    }
+
+    .section-title .badge {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .85rem;
+      font-weight: 800;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .badge-blue {
+      background: var(--blue);
+    }
+
+    .badge-tg {
+      background: var(--tg);
+    }
+
+    .badge-green {
+      background: var(--green);
+    }
+
+    .badge-red {
+      background: var(--red);
+    }
+
+    .badge-yellow {
+      background: var(--yellow);
+    }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      padding: 28px 32px;
+      margin-bottom: 20px;
+    }
+
+    /* ── STEPS ── */
+    .steps {
+      counter-reset: step;
+    }
+
+    .step {
+      display: flex;
+      gap: 20px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .step:last-child {
+      border-bottom: none;
+    }
+
+    .step-num {
+      counter-increment: step;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--blue);
+      color: #fff;
+      font-weight: 800;
+      font-size: .9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .step-body h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .step-body p {
+      font-size: .95rem;
+      color: #3a4a5c;
+    }
+
+    .step-body .tip {
+      margin-top: 10px;
+      background: #e8f0fe;
+      border-left: 4px solid var(--blue);
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-size: .88rem;
+      color: #1a3a6c;
+    }
+
+    /* ── SCREENSHOT ── */
+    .screenshot-wrap {
+      text-align: center;
+      margin: 16px 0 4px;
+    }
+
+    .screenshot-wrap img {
+      max-width: 100%;
+      max-height: 420px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, .10);
+      object-fit: contain;
+    }
+
+    .screenshot-caption {
+      font-size: .8rem;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    /* ── ALERT BOXES ── */
+    .alert {
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .alert-icon {
+      font-size: 1.4rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .alert-body h4 {
+      font-size: .95rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .alert-body p {
+      font-size: .9rem;
+    }
+
+    .alert-success {
+      background: #e6f9ee;
+      border: 1px solid #a8e6c0;
+    }
+
+    .alert-success h4 {
+      color: #1a7a3c;
+    }
+
+    .alert-error {
+      background: #fdecea;
+      border: 1px solid #f5c6c4;
+    }
+
+    .alert-error h4 {
+      color: #b71c1c;
+    }
+
+    .alert-warn {
+      background: #fff8e1;
+      border: 1px solid #ffe082;
+    }
+
+    .alert-warn h4 {
+      color: #7a5200;
+    }
+
+    /* ── FAQ ── */
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 18px 0;
+    }
+
+    .faq-item:last-child {
+      border-bottom: none;
+    }
+
+    .faq-q {
+      font-weight: 700;
+      font-size: .97rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .faq-q::before {
+      content: '?';
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--tg);
+      color: #fff;
+      font-size: .78rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .faq-a {
+      font-size: .92rem;
+      color: #3a4a5c;
+      margin-top: 10px;
+      margin-left: 34px;
+    }
+
+    /* ── CODE INLINE ── */
+    code {
+      background: #eef2fa;
+      border-radius: 4px;
+      padding: 2px 7px;
+      font-family: 'Courier New', monospace;
+      font-size: .88em;
+      color: #1a3a6c;
+    }
+
+    /* ── DIVIDER ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 8px 0;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      text-align: center;
+      font-size: .82rem;
+      color: var(--muted);
+      padding: 32px 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .card {
+        padding: 20px 16px;
+      }
+
+      .step {
+        gap: 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════════ HERO -->
+  <div class="hero">
+    <div class="hero-icon">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.17 13.967l-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.978.592z" />
+      </svg>
+    </div>
+    <h1>Cómo vincular tus alertas GPS<br>con Telegram</h1>
+    <p>Guía paso a paso para recibir notificaciones en tiempo real directamente en tu teléfono, sin importar si nunca
+      has usado Telegram.</p>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ CONTAINER -->
+  <div class="container">
+
+    <!-- ─── ¿QUÉ ES TELEGRAM? ─── -->
+    <div class="section-title">
+      <span class="badge badge-blue">1</span>
+      ¿Qué es Telegram y por qué usarlo?
+    </div>
+    <div class="card">
+      <p>
+        <strong>Telegram</strong> es una aplicación de mensajería gratuita disponible para Android, iPhone y
+        computadora.
+        A diferencia de los SMS, Telegram es <strong>gratuito</strong>, llega al instante y funciona con tu conexión a
+        internet (WiFi o datos móviles).
+      </p>
+      <br>
+      <p>
+        Al vincularlo con <strong>Optimus GPS</strong>, recibirás en tu celular un mensaje cada vez que se active una
+        alerta de tu vehículo:
+        motor encendido, exceso de velocidad, salida de zona, entre otras.
+      </p>
+      <br>
+      <div class="alert alert-warn">
+        <div class="alert-icon">📱</div>
+        <div class="alert-body">
+          <h4>Requisito previo</h4>
+          <p>
+            Para recibir las notificaciones debes tener instalada la app de Telegram.
+            Puedes usarla tanto en tu <strong>teléfono</strong> como en tu <strong>computadora</strong>.
+          </p>
+
+          <p>
+            Primero, instala Telegram en tu teléfono y crea tu cuenta:
+            <a href="https://telegram.org/apps" target="_blank" style="color:var(--tg)">
+              App Store / Google Play
+            </a>
+          </p>
+
+          <p>
+            Para completar la vinculación desde este sistema, también puedes instalar Telegram en tu computadora según
+            tu sistema operativo:
+          </p>
+
+          <ul>
+            <li>
+              Windows:
+              <a href="https://apps.microsoft.com/store/detail/telegram-desktop/9N0DX20HK701" target="_blank"
+                style="color:var(--tg)">
+                Descargar desde Microsoft Store
+              </a>
+            </li>
+            <li>
+              macOS:
+              <a href="https://apps.apple.com/app/telegram/id747648890" target="_blank" style="color:var(--tg)">
+                Descargar desde App Store
+              </a>
+            </li>
+          </ul>
+
+          <p>
+            También puedes usar Telegram Web si no deseas instalar la aplicación:
+            <a href="https://web.telegram.org/" target="_blank" style="color:var(--tg)">
+              https://web.telegram.org/
+            </a>
+          </p>
+
+          <p>
+            Una vez instalado, abre el bot y presiona <strong>Start</strong> para activar las notificaciones.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── PASOS ─── -->
+    <div class="section-title">
+      <span class="badge badge-tg">2</span>
+      Pasos para vincular tus alertas
+    </div>
+    <div class="card steps">
+
+      <!-- PASO 1 -->
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <h3>Abre el panel de notificaciones de Telegram</h3>
+          <p>En la barra superior del mapa, haz clic en el ícono azul de Telegram <strong>(✈)</strong>. Se abrirá un
+            panel con la lista de tus alertas configuradas.</p>
+          <div class="screenshot-wrap">
+            <img src="img/panel_notificaciones.png" alt="Panel de notificaciones de Telegram" />
+            <div class="screenshot-caption">Panel de notificaciones — lista de eventos disponibles para vincular</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PASO 2 -->
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <h3>Selecciona los eventos que deseas vincular</h3>
+          <p>Marca la casilla de cada alerta que quieras recibir por Telegram. Puedes seleccionar una o varias al mismo
+            tiempo.</p>
+          <div class="tip">
+            💡 Los eventos que ya están vinculados aparecen con la casilla marcada y un badge verde que indica cuántos
+            dispositivos están conectados (ej. <strong>1 ID</strong>, <strong>3 IDs</strong>).
+          </div>
+        </div>
+      </div>
+
+      <!-- PASO 3 -->
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <h3>Haz clic en "OK"</h3>
+          <p>Al presionar <strong>OK</strong>, el sistema generará automáticamente un enlace de vinculación único para
+            cada alerta seleccionada. Serás redirigido al bot de Telegram con el enlace del <strong>último evento
+              seleccionado</strong>.</p>
+          <div class="alert alert-warn" style="margin-top:14px;">
+            <div class="alert-icon">⚠️</div>
+            <div class="alert-body">
+              <h4>Si seleccionaste varios eventos</h4>
+              <p>El sistema solo te redirige automáticamente al enlace del último evento. Para vincular los demás,
+                regresa al panel y usa el botón <strong>🔗</strong> que aparece al lado de cada evento. Los eventos que
+                aún no están vinculados <strong>no tendrán la casilla marcada</strong>, pero sí mostrarán el botón de
+                copiar enlace. Copia ese enlace y ábrelo en Telegram para completar la vinculación de cada uno.</p>
+            </div>
+          </div>
+          <div class="tip" style="margin-top:12px;">
+            ⚠️ Al vincular por Telegram, las notificaciones por SMS se desactivarán automáticamente para ese evento,
+            evitando mensajes duplicados.
+          </div>
+        </div>
+      </div>
+
+      <!-- PASO 4 -->
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <h3>Inicia el bot en Telegram</h3>
+          <p>Se abrirá Telegram con el bot <strong>@alertasoptimusgps_bot</strong>. Verás un botón azul que dice
+            <strong>"START BOT"</strong> o <strong>"INICIAR"</strong>. Haz clic en él.</p>
+          <div class="screenshot-wrap">
+            <img src="img/telegram_bot_inicio.png" alt="Pantalla de inicio del bot en Telegram" />
+            <div class="screenshot-caption">Pantalla del bot — haz clic en "START BOT" para iniciar la vinculación</div>
+          </div>
+          <div class="tip">
+            💡 Si ya habías iniciado el bot antes, simplemente escribe <code>/start</code> en el chat del bot.
+          </div>
+        </div>
+      </div>
+
+      <!-- PASO 5 -->
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <h3>Confirmación de vinculación exitosa</h3>
+          <p>Si todo salió bien, el bot responderá con el mensaje: <strong>✅ Tu alerta de Optimus GPS ha sido vinculada
+              correctamente.</strong></p>
+          <div class="screenshot-wrap">
+            <img src="img/telegram_vinculado_ok.png" alt="Confirmación de vinculación exitosa" />
+            <div class="screenshot-caption">Mensaje de confirmación — la alerta ya está activa en tu Telegram</div>
+          </div>
+          <p style="margin-top:12px">A partir de este momento, cada vez que se active esa alerta en tu vehículo,
+            recibirás un mensaje directo en Telegram.</p>
+          <div class="alert alert-warn" style="margin-top:14px;">
+            <div class="alert-icon">🔕</div>
+            <div class="alert-body">
+              <h4>Este chat es solo de envio de alertas</h4>
+              <p>El bot <strong>no procesa respuestas</strong> de tu parte. Si contestas un mensaje, no recibirás
+                ninguna respuesta. El único propósito de este chat es enviarte notificaciones automáticas cuando se
+                activen tus alertas.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PASO 6 -->
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <h3>Comparte el enlace con otros usuarios (opcional)</h3>
+          <p>Si quieres que otra persona también reciba esa alerta (por ejemplo, un familiar o empleado), usa el botón
+            <strong>🔗</strong> que aparece al lado del evento en el panel. Esto copiará el enlace de vinculación para
+            que lo puedas enviar por WhatsApp, correo o cualquier otro medio.</p>
+          <div class="screenshot-wrap">
+            <img src="img/enlace_copiado.png" alt="Enlace copiado al portapapeles" />
+            <div class="screenshot-caption">El enlace se copia automáticamente — compártelo con quien necesite recibir
+              la alerta</div>
+          </div>
+          <div class="tip">
+            💡 Cada persona que use ese enlace quedará vinculada al mismo evento. El badge verde mostrará cuántas
+            personas están conectadas.
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /steps -->
+
+    <!-- ─── VERIFICAR VINCULACIÓN ─── -->
+    <div class="section-title">
+      <span class="badge badge-green">3</span>
+      Cómo verificar que todo está correcto
+    </div>
+    <div class="card">
+      <p>Puedes confirmar la vinculación de dos formas:</p>
+      <br>
+      <p><strong>1. Desde el panel flotante:</strong> El evento aparecerá con la casilla marcada y el badge verde con el
+        número de IDs vinculados.</p>
+      <br>
+      <p><strong>2. Desde las propiedades del evento:</strong> Abre las propiedades del evento (clic derecho →
+        Propiedades), ve a la pestaña <strong>Notificaciones</strong>. Verás el Chat ID del dispositivo vinculado y el
+        token de vinculación.</p>
+      <div class="screenshot-wrap">
+        <img src="img/evento_propiedades.png" alt="Propiedades del evento mostrando Chat ID y Token" />
+        <div class="screenshot-caption">Pestaña Notificaciones — Chat ID y Token de vinculación visibles para el
+          administrador</div>
+      </div>
+    </div>
+
+    <!-- ─── EJEMPLOS ─── -->
+    <div class="section-title">
+      <span class="badge badge-green">4</span>
+      Ejemplos de resultado
+    </div>
+    <div class="card">
+
+      <div class="alert alert-success">
+        <div class="alert-icon">✅</div>
+        <div class="alert-body">
+          <h4>Vinculación exitosa</h4>
+          <p>El bot responde: <em>"✅ Tu alerta de Optimus GPS ha sido vinculada correctamente."</em><br>
+            El panel muestra el evento con casilla marcada y badge <strong>1 ID</strong>.</p>
+        </div>
+      </div>
+
+      <div class="alert alert-success">
+        <div class="alert-icon">✅</div>
+        <div class="alert-body">
+          <h4>Múltiples usuarios vinculados</h4>
+          <p>Compartes el enlace con 3 personas. El badge muestra <strong>3 IDs</strong>. Todos reciben la alerta al
+            mismo tiempo cuando se activa.</p>
+        </div>
+      </div>
+
+      <div class="alert alert-error">
+        <div class="alert-icon">❌</div>
+        <div class="alert-body">
+          <h4>El bot responde "El código no es válido o ya expiró"</h4>
+          <p>Esto ocurre cuando el token que se envió al bot no coincide con el guardado en el sistema. Solución:
+            regresa al panel, selecciona el evento y vuelve a hacer clic en <strong>OK</strong> para generar un nuevo
+            enlace.</p>
+        </div>
+      </div>
+
+      <div class="alert alert-error">
+        <div class="alert-icon">❌</div>
+        <div class="alert-body">
+          <h4>El bot no responde nada</h4>
+          <p>Puede ser un problema de conexión. Verifica que tienes internet activo y vuelve a intentarlo. Si el
+            problema persiste, cierra Telegram y vuelve a abrirlo.</p>
+        </div>
+      </div>
+
+      <div class="alert alert-warn">
+        <div class="alert-icon">⚠️</div>
+        <div class="alert-body">
+          <h4>El enlace abre Telegram pero no hace nada</h4>
+          <p>Asegúrate de presionar el botón <strong>"START BOT"</strong> o escribir <code>/start</code> en el chat.
+            Solo abrir Telegram no es suficiente; debes iniciar la conversación con el bot.</p>
+        </div>
+      </div>
+
+      <div class="alert alert-warn">
+        <div class="alert-icon">⚠️</div>
+        <div class="alert-body">
+          <h4>Siguen llegando SMS aunque activé Telegram</h4>
+          <p>Al vincular por Telegram, el sistema desactiva el SMS automáticamente. Si aún llegan SMS, abre las
+            propiedades del evento, ve a <strong>Notificaciones</strong> y desmarca manualmente la casilla de SMS, luego
+            guarda.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ─── PREGUNTAS FRECUENTES ─── -->
+    <div class="section-title">
+      <span class="badge badge-tg">5</span>
+      Preguntas frecuentes
+    </div>
+    <div class="card">
+
+      <div class="faq-item">
+        <div class="faq-q">¿Necesito pagar por Telegram?</div>
+        <div class="faq-a">No. Telegram es completamente gratuito. Solo necesitas una conexión a internet (WiFi o datos
+          móviles).</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">¿Puedo vincular el mismo evento en varios teléfonos?</div>
+        <div class="faq-a">Sí. Usa el botón <strong>🔗</strong> para copiar el enlace y compártelo con cada persona.
+          Cada una que lo use quedará vinculada al mismo evento.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">¿Qué pasa si cambio de teléfono?</div>
+        <div class="faq-a">Si instalas Telegram en tu nuevo teléfono con el mismo número, seguirás recibiendo las
+          alertas sin necesidad de volver a vincular.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">¿Puedo desvincular un evento de Telegram?</div>
+        <div class="faq-a">Sí. Abre las propiedades del evento, ve a <strong>Notificaciones</strong>, desmarca la
+          casilla de Telegram, borra el Chat ID y guarda los cambios.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">¿Por qué el token cambia cada vez que presiono OK?</div>
+        <div class="faq-a">Si el evento ya tiene un token, el sistema reutiliza el mismo. Solo se genera uno nuevo si el
+          evento no tenía token previamente. Esto evita que los enlaces compartidos dejen de funcionar.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">¿Puedo usar Telegram y SMS al mismo tiempo?</div>
+        <div class="faq-a">No se recomienda, ya que recibirías el mismo aviso dos veces. Al vincular por Telegram, el
+          sistema desactiva el SMS automáticamente para ese evento.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">¿El bot funciona en grupos de Telegram?</div>
+        <div class="faq-a">Actualmente el bot está diseñado para chats individuales. Para grupos, contacta al
+          administrador del sistema.</div>
+      </div>
+
+    </div>
+
+    <!-- ─── SOPORTE ─── -->
+    <div class="section-title">
+      <span class="badge badge-red">6</span>
+      ¿Necesitas ayuda adicional?
+    </div>
+    <div class="card" style="padding: 32px;">
+      <p style="font-size:1rem; margin-bottom:24px;">Si después de seguir esta guía sigues teniendo problemas, contacta
+        a nuestro equipo de soporte. Proporciona el nombre del evento y el mensaje exacto que muestra el bot.</p>
+      <div style="background:#f4f6fb; border-radius:10px; padding:24px 28px; border-left:4px solid var(--tg);">
+        <p style="font-weight:700; font-size:1.05rem; margin-bottom:14px; color:var(--text);">Departamento de Soporte
+          Técnico y Sistemas</p>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span style="font-size:1.2rem;">📞</span>
+            <span>8115165639 &nbsp;·&nbsp; 8110493827 &nbsp;·&nbsp; 8117385912</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span style="font-size:1.2rem;">✉️</span>
+            <a href="mailto:sistemas@optimusenlinea.org"
+              style="color:var(--tg); font-weight:600;">sistemas@optimusenlinea.org</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /container -->
+
+  <div class="footer">
+    &copy; Optimus GPS — Manual de vinculación con Telegram &nbsp;|&nbsp; Versión 1.0
+  </div>
+
+</body>
+
+</html>
