@@ -329,6 +329,8 @@ function checkUserSession()
         }
 
         if (($file != 'index.php') && ($file != 'fn_connect.php')) {
+            header("X-Debug-Session: Failed checkUserSession2 within $file");
+            if (isset($_POST['cmd'])) { echo json_encode(array('debug_error' => "checkUserSession failed for file $file")); }
             die;
         }
     } else {
@@ -389,10 +391,14 @@ function checkUserCPanelPrivileges()
     global $ms, $gsValues;
 
     if (!isset($_SESSION["cpanel_privileges"])) {
+        header("X-Debug-Session: No cpanel privileges");
+        if (isset($_POST['cmd'])) { echo json_encode(array('debug_error' => "No cpanel privileges")); }
         die;
     }
 
     if ($_SESSION["cpanel_privileges"] == false) {
+        header("X-Debug-Session: cpanel privileges false");
+        if (isset($_POST['cmd'])) { echo json_encode(array('debug_error' => "Cpanel privileges is false")); }
         die;
     }
 
@@ -400,6 +406,8 @@ function checkUserCPanelPrivileges()
         if ($gsValues['ADMIN_IP'] != '') {
             $admin_ips = explode(",", $gsValues['ADMIN_IP']);
             if (!in_array($_SERVER['REMOTE_ADDR'], $admin_ips)) {
+                header("X-Debug-Session: Admin IP mismatch");
+                if (isset($_POST['cmd'])) { echo json_encode(array('debug_error' => "Admin IP mismatch")); }
                 die;
             }
         }
