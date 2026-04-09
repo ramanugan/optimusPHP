@@ -329,8 +329,10 @@ function checkUserSession()
         }
 
         if (($file != 'index.php') && ($file != 'fn_connect.php')) {
-            header("X-Debug-Session: Failed checkUserSession2 within $file");
-            if (isset($_POST['cmd'])) { echo json_encode(array('debug_error' => "checkUserSession failed for file $file")); }
+            global $debug_checkUserSession2_reason;
+            header("X-Debug-Session: Failed checkUserSession2 within $file. Reason: " . $debug_checkUserSession2_reason);
+            @file_put_contents('/var/www/html/debug_latest.txt', "File: $file, Reason: " . $debug_checkUserSession2_reason . "\n", FILE_APPEND);
+            if (isset($_POST['cmd'])) { echo json_encode(array('debug_error' => "checkUserSession failed for file $file", 'reason' => $debug_checkUserSession2_reason)); }
             die;
         }
     } else {
@@ -350,22 +352,36 @@ function checkUserSession()
 
 function checkUserSession2()
 {
-    global $ms, $gsValues;
+    global $ms, $gsValues, $debug_checkUserSession2_reason;
 
     $result = false;
+    $debug_checkUserSession2_reason = "Unknown";
 
     if (isset($_SESSION["user_id"]) && isset($_SESSION["session"]) && isset($_SESSION["remote_addr"]) && isset($_SESSION["cpanel_privileges"])) {
         if (checkUserActive($_SESSION["user_id"]) == true) {
             if (($_SESSION["cpanel_privileges"] == false) || ($gsValues['ADMIN_IP_SESSION_CHECK'] == false)) {
                 if ($_SESSION["session"] == md5($gsValues['PATH_ROOT'])) {
                     $result = true;
+                } else {
+                    $debug_checkUserSession2_reason = "PATH_ROOT mismatch: Session " . $_SESSION["session"] . " != " . md5($gsValues['PATH_ROOT']);
                 }
             } else {
                 if (($_SESSION["session"] == md5($gsValues['PATH_ROOT'])) && ($_SESSION["remote_addr"] == md5($_SERVER['REMOTE_ADDR']))) {
                     $result = true;
+                } else {
+                    $debug_checkUserSession2_reason = "PATH_ROOT or REMOTE_ADDR mismatch";
                 }
             }
+        } else {
+            $debug_checkUserSession2_reason = "User not active: " . $_SESSION["user_id"];
         }
+    } else {
+        $missing = [];
+        if (!isset($_SESSION["user_id"])) $missing[] = "user_id";
+        if (!isset($_SESSION["session"])) $missing[] = "session";
+        if (!isset($_SESSION["remote_addr"])) $missing[] = "remote_addr";
+        if (!isset($_SESSION["cpanel_privileges"])) $missing[] = "cpanel_privileges";
+        $debug_checkUserSession2_reason = "Missing session vars: " . implode(", ", $missing);
     }
 
     return $result;
