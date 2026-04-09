@@ -22,6 +22,7 @@ services:
     image: nginx:alpine
     user: root
     container_name: front-app-nginx
+    command: /bin/sh -c "sed -i 's/user  nginx;/user  root;/g' /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
     restart: always
     volumes:
       - ./site:/var/www/html:ro
