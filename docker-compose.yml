@@ -9,6 +9,8 @@ services:
     container_name: front-app
     restart: always
     user: "www-data:www-data"
+    env_file:
+      - .env
     volumes:
       - ./site:/var/www/html:rw
       - ./logs:/var/www/html/logs:rw
@@ -18,6 +20,7 @@ services:
   # Servidor web Nginx (balanceador/estáticos)
   nginx:
     image: nginx:alpine
+    user: root
     container_name: front-app-nginx
     restart: always
     volumes:
