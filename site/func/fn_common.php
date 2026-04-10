@@ -309,7 +309,7 @@ function checkUserSession()
 
     $file = basename($_SERVER['SCRIPT_NAME']);
 
-    if (($file == 'index.php') || (checkUserSession2() == false)) {
+    if (checkUserSession2() == false) {
         session_unset();
         session_destroy();
         session_start();
