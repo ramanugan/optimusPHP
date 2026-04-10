@@ -1,7 +1,7 @@
 FROM php:7.4-fpm
 
 WORKDIR /var/www/html
-
+COPY ./site /var/www/html/
 RUN apt-get update && \
     apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libpng-dev libxml2-dev && \
     apt-get install -y default-mysql-client && \
