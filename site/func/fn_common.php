@@ -310,9 +310,6 @@ function checkUserSession()
     $file = basename($_SERVER['SCRIPT_NAME']);
 
     if (checkUserSession2() == false) {
-        session_unset();
-        session_destroy();
-        session_start();
 
         $user_id = getUserIdFromSessionHash();
 
