@@ -10,7 +10,7 @@ RUN apt-get update && \
     docker-php-ext-install mysqli && \
     docker-php-ext-install soap sockets
 
-COPY php.ini $PHP_INI_DIR/php.ini
+COPY docker/php/php.ini $PHP_INI_DIR/php.ini
 
 RUN chown -R www-data:www-data /var/www/html
 RUN chmod 777 /var/www/html
