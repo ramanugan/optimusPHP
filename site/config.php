@@ -7,7 +7,7 @@
 $gsValues['VERSION_ID'] = 40121;
 $gsValues['VERSION'] = '3.3.3';
 
-$gsValues['URL_BASE'] = getenv('URL_BASE');
+$gsValues['URL_BASE'] = getenv('URL_BASE') ?: $_SERVER['HTTP_HOST'];
 $gsValues['URL_BASE_TIENDA'] = 'optimusgpstiendaenlinea.com';
 $gsValues['URL_BASE_CONTACT'] = 'optimusgpstiendaenlinea.com';
 $gsValues['URL_BASE_SHOP'] = '';
