@@ -1,0 +1,12 @@
+# Variables de entorno (contienen credenciales)
+.env
+
+# Logs
+ws-logs/
+*.log
+
+# Documentos de usuario (datos de producción)
+docs/
+
+# macOS
+.DS_Store

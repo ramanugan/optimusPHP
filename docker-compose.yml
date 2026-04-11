@@ -6,7 +6,6 @@ services:
     build:
       context: .
       dockerfile: docker/php/Dockerfile
-    container_name: front-app
     restart: always
     env_file:
       - .env
@@ -15,21 +14,33 @@ services:
       - ./ws-logs:/var/www/html/ws-logs:rw
       - ./docs:/var/www/html/data/user/settingsUsersDocument:rw
       - php-sessions:/var/sessions:rw
+    networks:
+      - internal
 
   # Servidor web Nginx (balanceador/estáticos)
   nginx:
     image: nginx:alpine
     user: root
-    container_name: front-app-nginx
     restart: always
-    ports:
-      - "80:80"
     volumes:
       - app-data:/var/www/html:ro
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
     depends_on:
       - front-app
+    networks:
+      - internal
+      - dokploy-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.optimus-nginx.loadbalancer.server.port=80"
 
 volumes:
   app-data:
   php-sessions:
+
+networks:
+  internal:
+    driver: bridge
+  dokploy-network:
+    external: true
+    name: dokploy-network
