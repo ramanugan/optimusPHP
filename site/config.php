@@ -15,7 +15,7 @@ $gsValues['URL_BASE_GATEWAY_APP'] = 'www.gps-server.net/sms-gateway-android';
 $gsValues['URL_ROUTING_OSMR_SERVICE_URL'] = 'router.project-osrm.org/route/v1';
 $gsValues['URL_BILLING_CUSTOM_URL'] = 'cedis.connectfdi.com/login';
 
-$gsValues['HTTP_MODE'] = getenv('HTTP_MODE'); // options: http/https
+$gsValues['HTTP_MODE'] = getenv('HTTP_MODE') ?: 'https'; // options: http/https
 
 // lock admin to IP addresses, example $gsValues['ADMIN_IP'] = '127.0.0.1,222.222.222.222,333.333.333.333';
 $gsValues['ADMIN_IP'] = '';
