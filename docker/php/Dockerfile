@@ -15,6 +15,11 @@ COPY docker/php/php.ini $PHP_INI_DIR/php.ini
 RUN chown -R www-data:www-data /var/www/html
 RUN chmod 777 /var/www/html
 
+# Crear el directorio de sesiones con permisos correctos para www-data
+RUN mkdir -p /var/sessions && \
+    chown -R www-data:www-data /var/sessions && \
+    chmod 700 /var/sessions
+
 RUN ln -sf /dev/stdout /var/log/stdout.log
 RUN ln -sf /dev/stderr /var/log/stderr.log
 
