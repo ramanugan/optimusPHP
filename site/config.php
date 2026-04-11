@@ -4,7 +4,7 @@
 // Other settings can be changed from CPanel/Manage server
 // ############################################################
 
-$gsValues['VERSION_ID'] = 40120;
+$gsValues['VERSION_ID'] = 40121;
 $gsValues['VERSION'] = '3.3.3';
 
 $gsValues['URL_BASE'] = getenv('URL_BASE');
@@ -51,7 +51,7 @@ $gsValues['DNS_ANGULAR'] = getenv('DNS_ANGULAR');
 
 // connection to MySQL database
 $gsValues['DB_HOSTNAME'] = getenv("DB_HOSTNAME");
-$gsValues['DB_PORT']     = getenv("DB_PORT"); // database port
-$gsValues['DB_NAME']     = getenv("DB_NAME"); // database name
+$gsValues['DB_PORT'] = getenv("DB_PORT"); // database port
+$gsValues['DB_NAME'] = getenv("DB_NAME"); // database name
 $gsValues['DB_USERNAME'] = getenv("DB_USERNAME"); // database user name
 $gsValues['DB_PASSWORD'] = getenv("DB_PASSWORD"); // database password
