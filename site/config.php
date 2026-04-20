@@ -4,10 +4,10 @@
 // Other settings can be changed from CPanel/Manage server
 // ############################################################
 
-$gsValues['VERSION_ID'] = 40121;
+$gsValues['VERSION_ID'] = 40120;
 $gsValues['VERSION'] = '3.3.3';
 
-$gsValues['URL_BASE'] = getenv('URL_BASE') ?: $_SERVER['HTTP_HOST'];
+$gsValues['URL_BASE'] = getenv('URL_BASE');
 $gsValues['URL_BASE_TIENDA'] = 'optimusgpstiendaenlinea.com';
 $gsValues['URL_BASE_CONTACT'] = 'optimusgpstiendaenlinea.com';
 $gsValues['URL_BASE_SHOP'] = '';
@@ -15,7 +15,7 @@ $gsValues['URL_BASE_GATEWAY_APP'] = 'www.gps-server.net/sms-gateway-android';
 $gsValues['URL_ROUTING_OSMR_SERVICE_URL'] = 'router.project-osrm.org/route/v1';
 $gsValues['URL_BILLING_CUSTOM_URL'] = 'cedis.connectfdi.com/login';
 
-$gsValues['HTTP_MODE'] = getenv('HTTP_MODE') ?: 'https'; // options: http/https
+$gsValues['HTTP_MODE'] = getenv('HTTP_MODE'); // options: http/https
 
 // lock admin to IP addresses, example $gsValues['ADMIN_IP'] = '127.0.0.1,222.222.222.222,333.333.333.333';
 $gsValues['ADMIN_IP'] = '';
@@ -51,7 +51,7 @@ $gsValues['DNS_ANGULAR'] = getenv('DNS_ANGULAR');
 
 // connection to MySQL database
 $gsValues['DB_HOSTNAME'] = getenv("DB_HOSTNAME");
-$gsValues['DB_PORT'] = getenv("DB_PORT"); // database port
-$gsValues['DB_NAME'] = getenv("DB_NAME"); // database name
+$gsValues['DB_PORT']     = getenv("DB_PORT"); // database port
+$gsValues['DB_NAME']     = getenv("DB_NAME"); // database name
 $gsValues['DB_USERNAME'] = getenv("DB_USERNAME"); // database user name
 $gsValues['DB_PASSWORD'] = getenv("DB_PASSWORD"); // database password

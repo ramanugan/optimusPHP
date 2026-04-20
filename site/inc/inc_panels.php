@@ -176,7 +176,6 @@
 
 	<div class="tp-menu right-menu">
 
-			<?php if ($_SESSION['privileges'] == 'super_admin' || $_SESSION['privileges'] == 'admin') { ?>
 				<!-- Telegram Vinculación (solo super_admin) -->
 				<div class="telegram-link-btn" id="telegram_link_container">
 					<a href="#" onclick="tgManualOpen(); return false;" title="<? echo $la['TELEGRAM_LINK_TITLE'] ?? 'Vincular Telegram'; ?>" id="tg_panel_btn">
@@ -221,7 +220,6 @@
 					<!-- Contenido cargado dinámicamente -->
 				</div>
 			</div>
-			<?php } ?>
 
 		<div class="select-language <? if ($_SESSION["cpanel_privileges"]) { ?>cp<? } ?>" id="language_container">
 			<select id="system_language" onChange="if(utilsCheckPrivileges('perm_lenguaje')) { switchLanguageTracking(); } return false;" class="select">

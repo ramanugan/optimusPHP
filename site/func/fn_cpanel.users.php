@@ -194,7 +194,7 @@ if (@$_GET['cmd'] == 'load_user_list') {
 	}
 
 	header('Content-type: application/json');
-	echo json_encode($response, JSON_INVALID_UTF8_IGNORE);
+	echo json_encode($response);
 	die;
 }
 
@@ -260,7 +260,7 @@ if (@$_GET['cmd'] == 'load_user_search_list') {
 		$result[] = $data;
 	}
 
-	echo json_encode($result, JSON_INVALID_UTF8_IGNORE);
+	echo json_encode($result);
 	die;
 }
 
@@ -620,7 +620,7 @@ if (@$_POST['cmd'] == 'load_user_data') {
 		'usage_api_daily' => $row['usage_api_daily'],
 		'documentos' => $docs
 	);
-	echo json_encode($result, JSON_INVALID_UTF8_IGNORE);
+	echo json_encode($result);
 	die;
 }
 
@@ -1647,7 +1647,7 @@ if (@$_POST['cmd'] == 'load_user_billing_plan') {
 
 	$result = array('name' => $row['name'], 'objects' => $row['objects'], 'period' => $row['period'], 'period_type' => $row['period_type'], 'price' => $row['price']);
 
-	echo json_encode($result, JSON_INVALID_UTF8_IGNORE);
+	echo json_encode($result);
 	die;
 }
 

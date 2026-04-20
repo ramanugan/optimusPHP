@@ -309,7 +309,10 @@ function checkUserSession()
 
     $file = basename($_SERVER['SCRIPT_NAME']);
 
-    if (checkUserSession2() == false) {
+    if (($file == 'index.php') || (checkUserSession2() == false)) {
+        session_unset();
+        session_destroy();
+        session_start();
 
         $user_id = getUserIdFromSessionHash();
 
@@ -326,10 +329,6 @@ function checkUserSession()
         }
 
         if (($file != 'index.php') && ($file != 'fn_connect.php')) {
-            global $debug_checkUserSession2_reason;
-            header("X-Debug-Session: Failed checkUserSession2 within $file. Reason: " . $debug_checkUserSession2_reason);
-            @file_put_contents('/var/www/html/debug_latest.txt', "File: $file, Reason: " . $debug_checkUserSession2_reason . "\n", FILE_APPEND);
-            if (isset($_POST['cmd'])) { echo json_encode(array('debug_error' => "checkUserSession failed for file $file", 'reason' => $debug_checkUserSession2_reason)); }
             die;
         }
     } else {
@@ -349,36 +348,22 @@ function checkUserSession()
 
 function checkUserSession2()
 {
-    global $ms, $gsValues, $debug_checkUserSession2_reason;
+    global $ms, $gsValues;
 
     $result = false;
-    $debug_checkUserSession2_reason = "Unknown";
 
     if (isset($_SESSION["user_id"]) && isset($_SESSION["session"]) && isset($_SESSION["remote_addr"]) && isset($_SESSION["cpanel_privileges"])) {
         if (checkUserActive($_SESSION["user_id"]) == true) {
             if (($_SESSION["cpanel_privileges"] == false) || ($gsValues['ADMIN_IP_SESSION_CHECK'] == false)) {
                 if ($_SESSION["session"] == md5($gsValues['PATH_ROOT'])) {
                     $result = true;
-                } else {
-                    $debug_checkUserSession2_reason = "PATH_ROOT mismatch: Session " . $_SESSION["session"] . " != " . md5($gsValues['PATH_ROOT']);
                 }
             } else {
                 if (($_SESSION["session"] == md5($gsValues['PATH_ROOT'])) && ($_SESSION["remote_addr"] == md5($_SERVER['REMOTE_ADDR']))) {
                     $result = true;
-                } else {
-                    $debug_checkUserSession2_reason = "PATH_ROOT or REMOTE_ADDR mismatch";
                 }
             }
-        } else {
-            $debug_checkUserSession2_reason = "User not active: " . $_SESSION["user_id"];
         }
-    } else {
-        $missing = [];
-        if (!isset($_SESSION["user_id"])) $missing[] = "user_id";
-        if (!isset($_SESSION["session"])) $missing[] = "session";
-        if (!isset($_SESSION["remote_addr"])) $missing[] = "remote_addr";
-        if (!isset($_SESSION["cpanel_privileges"])) $missing[] = "cpanel_privileges";
-        $debug_checkUserSession2_reason = "Missing session vars: " . implode(", ", $missing);
     }
 
     return $result;
@@ -404,14 +389,10 @@ function checkUserCPanelPrivileges()
     global $ms, $gsValues;
 
     if (!isset($_SESSION["cpanel_privileges"])) {
-        header("X-Debug-Session: No cpanel privileges");
-        if (isset($_POST['cmd'])) { echo json_encode(array('debug_error' => "No cpanel privileges")); }
         die;
     }
 
     if ($_SESSION["cpanel_privileges"] == false) {
-        header("X-Debug-Session: cpanel privileges false");
-        if (isset($_POST['cmd'])) { echo json_encode(array('debug_error' => "Cpanel privileges is false")); }
         die;
     }
 
@@ -419,8 +400,6 @@ function checkUserCPanelPrivileges()
         if ($gsValues['ADMIN_IP'] != '') {
             $admin_ips = explode(",", $gsValues['ADMIN_IP']);
             if (!in_array($_SERVER['REMOTE_ADDR'], $admin_ips)) {
-                header("X-Debug-Session: Admin IP mismatch");
-                if (isset($_POST['cmd'])) { echo json_encode(array('debug_error' => "Admin IP mismatch")); }
                 die;
             }
         }

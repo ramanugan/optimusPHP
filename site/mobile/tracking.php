@@ -59,11 +59,11 @@
 		{
 			if ($gsValues['MAP_GOOGLE_KEY'] == '')
 			{
-				echo '<script src="https://maps.google.com/maps/api/js"></script>';
+				echo '<script src="'.$gsValues['HTTP_MODE'].'://maps.google.com/maps/api/js"></script>';
 			}
 			else
 			{
-				echo '<script src="https://maps.google.com/maps/api/js?key='.$gsValues['MAP_GOOGLE_KEY'].'"></script>';
+				echo '<script src="'.$gsValues['HTTP_MODE'].'://maps.google.com/maps/api/js?key='.$gsValues['MAP_GOOGLE_KEY'].'"></script>';
 			}
 		}
 		?>

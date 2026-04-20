@@ -655,7 +655,6 @@ $canEdit = ($_SESSION["cpanel_privileges"] === 'super_admin' || $_SESSION["cpane
 						<input id="dialog_settings_event_notify_sms_number" class="inputbox" type="text" value="" maxlength="500" placeholder="<? echo $la['PHONE_NUMBER_WITH_CODE']; ?>" />
 					</div>
 				</div>
-			<?php if ($_SESSION['privileges'] == 'super_admin' || $_SESSION['privileges'] == 'admin') { ?>
 					<div class="row2">
 						<div class="width45"><? echo $la['TELEGRAM_NOTIFY_LABEL']; ?></div>
 						<div class="width5"></div>
@@ -700,7 +699,6 @@ $canEdit = ($_SESSION["cpanel_privileges"] === 'super_admin' || $_SESSION["cpane
 							</div>
 						</div>
 					</div>
-					<?php } ?>
 				<div class="row2">
 					<div class="width45"><? echo $la['EMAIL_TEMPLATE']; ?></div>
 					<div class="width5"></div>

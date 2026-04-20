@@ -249,7 +249,7 @@ if (@$_POST['cmd'] == 'load_server_data') {
 		'perm_geocercas_mapa'           => $gsValues['PERM_GEOCERCAS_MAPA'],
 
 	);
-	echo json_encode($result, JSON_INVALID_UTF8_IGNORE);
+	echo json_encode($result);
 	die;
 }
 
@@ -472,7 +472,7 @@ if (@$_POST['cmd'] == 'load_custom_map_list') {
 		$result[] = array('map_id' => $map_id, 'name' => $name, 'active' => $active, 'type' => $type, 'url' => $url, 'layers' => $layers);
 	}
 
-	echo json_encode($result, JSON_INVALID_UTF8_IGNORE);
+	echo json_encode($result);
 	die;
 }
 
@@ -868,7 +868,7 @@ if (@$_POST['cmd'] == 'load_template_list') {
 		$result[] = $row['name'];
 	}
 
-	echo json_encode($result, JSON_INVALID_UTF8_IGNORE);
+	echo json_encode($result);
 	die;
 }
 
@@ -982,7 +982,7 @@ if (@$_POST['cmd'] == 'load_log_list') {
 
 	closedir($dh);
 
-	echo json_encode($result, JSON_INVALID_UTF8_IGNORE);
+	echo json_encode($result);
 	die;
 }
 

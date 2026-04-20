@@ -11,9 +11,6 @@ checkUserCPanelPrivileges();
 
 loadLanguage($_SESSION["language"], $_SESSION["units"]);
 
-header("X-Debug-Cmd: " . (isset($_POST['cmd']) ? $_POST['cmd'] : 'empty'));
-header("X-Debug-Post: " . json_encode($_POST));
-
 if (@$_POST['cmd'] == 'load_cpanel_data') {
 	$result = array(
 		'user_id' => $_SESSION["cpanel_user_id"],
@@ -27,7 +24,7 @@ if (@$_POST['cmd'] == 'load_cpanel_data') {
 		'language' => $_SESSION["language"]
 	);
 
-	echo json_encode($result, JSON_INVALID_UTF8_IGNORE);
+	echo json_encode($result);
 	die;
 }
 
