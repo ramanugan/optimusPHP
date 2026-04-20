@@ -1,7 +1,7 @@
 version: "3.8"
 
 services:
-  # Servicio de intérprete PHP-FPM
+  # Servicio de intérprete PHP-FPM (2 réplicas)
   front-app:
     build:
       context: .
@@ -9,6 +9,15 @@ services:
     restart: always
     env_file:
       - .env
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          cpus: "0.80"
+          memory: 1024M
+        reservations:
+          cpus: "0.25"
+          memory: 256M
     volumes:
       - app-data:/var/www/html:rw
       - ./ws-logs:/var/www/html/ws-logs:rw
